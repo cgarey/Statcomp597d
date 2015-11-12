@@ -1,0 +1,35 @@
+```{r}
+library(ggplot2)
+library(broom)
+library(lubridate)
+library(RCurl)
+library(tidyr)
+
+```
+
+From the ggplot2 package, tidy up the "movies" data set, specifically r1:r10 and Action:Short.
+```{r}
+data("movies")
+
+tidy1 <- gather(movies, rating, frequency,r1:r10,-title)
+tidy2 <- gather(tidy1, genre,number,Action:Short,-title)
+
+```
+
+From the cafe data set, explain how would you tidy it up. Which variables?
+
+```{r}
+url <- getURL("https://raw.githubusercontent.com/shv38339/statcomp597d/master/cafedata.csv")
+dat <- read.csv(file = textConnection(url), header = TRUE)
+```
+
+The most unclear data in this data set is the date variables. By separating the month, day, and year it would be possible to work with each individually and make it easier to see month or year level data.You could also unlump the wasted drinks to provide a more useful comparison to the drink sale values.
+
+To undtidy I lumped the drink variables because they are also lumped under drinks wasted
+
+```{r}
+untidy <- paste(dat$Juices,dat$Sodas,dat$Coffees,sep="")
+untidy
+```
+
+
